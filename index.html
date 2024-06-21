@@ -1,10 +1,119 @@
-<html>
-  <head>
-    <title>
-      Hello NCMM
-    </title>
-  </head>
-  <body>
-    Welcome to NayChi MyatMon!
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        @font-face {
+            font-family: 'DSEG7 Classic';
+            src: url('https://fonts.cdnfonts.com/s/16379/DSEG7Classic-Regular.woff') format('woff');
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        :root {
+            --background-light: #ffffff;
+            --background-dark: #000000;
+            --text-light: #8B0000;
+            --text-dark: #FF0000;
+        }
+
+        body.light {
+            background-color: var(--background-light);
+            color: var(--text-light);
+        }
+
+        body.dark {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .mode-toggle i {
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .clock-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .clock {
+            font-size: 5em;
+            font-weight: bold;
+            font-family: 'DSEG7 Classic', sans-serif;
+            color: var(--text-dark);
+        }
+
+        body.light .clock {
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body class="dark">
+    <h1>NOTHING IS PERMANENT!</h1>
+    <div class="mode-toggle">
+        <i id="mode-icon" class="material-icons">brightness_5</i>
+    </div>
+    <div class="clock-container">
+        <div class="clock" id="clock">00:00:00</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const modeIcon = $('#mode-icon');
+            const body = $('body');
+
+            modeIcon.click(function() {
+                body.toggleClass('dark light');
+                if (body.hasClass('dark')) {
+                    modeIcon.text('brightness_5'); // sun icon for light mode
+                } else {
+                    modeIcon.text('brightness_2'); // moon icon for dark mode
+                }
+            });
+
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                $('#clock').text(`${hours}:${minutes}:${seconds}`);
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
+    </script>
+</body>
 </html>
